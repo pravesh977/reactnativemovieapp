@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, View, TouchableHighlight, Alert, StyleSheet } from 'react-native';
+import { Text, View, TouchableOpacity, Alert, StyleSheet } from 'react-native';
 
 class Footer extends React.Component {
 
@@ -12,23 +12,23 @@ class Footer extends React.Component {
     return (
     <View style={styles.container}>
 
-        <TouchableHighlight onPress={this._onPressButton} underlayColor="white">
-          <View style={styles.button}>
+        <TouchableOpacity onPress={this._onPressButton} underlayColor="white" style={styles.button}>
+          <View>
             <Text style={styles.buttonText}>New</Text>
           </View>
-        </TouchableHighlight>
+        </TouchableOpacity>
 
-        <TouchableHighlight onPress={this._onPressButton} underlayColor="white">
-          <View style={styles.button}>
+        <TouchableOpacity onPress={this._onPressButton} underlayColor="white" style={styles.button}>
+          <View>
             <Text style={styles.buttonText}>Search</Text>
           </View>
-        </TouchableHighlight>
+        </TouchableOpacity>
 
-        <TouchableHighlight onPress={this._onPressButton} underlayColor="white">
-          <View style={styles.button}>
+        <TouchableOpacity onPress={this._onPressButton} underlayColor="white" style={styles.button}>
+          <View>
             <Text style={styles.buttonText}>Favorites</Text>
           </View>
-        </TouchableHighlight>
+        </TouchableOpacity>
     </View>
     );
   }
@@ -37,15 +37,17 @@ const styles = StyleSheet.create({
     container: {
       width: '100%',
       flexDirection: 'row',
-      alignItems: 'stretch',
-      justifyContent: 'space-around',
       backgroundColor: 'pink',
     },
     button: {
-      alignItems: 'stretch',
+      flex: 1,
+      borderRadius: 4,
+      borderWidth: 0.5,
+      borderColor: '#d6d7da',
       backgroundColor: '#2196F3'
     },
     buttonText: {
+      textAlign: 'center',
       padding: 20,
       color: 'white'
     }
