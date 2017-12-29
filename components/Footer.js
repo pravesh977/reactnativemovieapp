@@ -7,6 +7,10 @@ class Footer extends React.Component {
     _onPressButton() {
         Alert.alert('You tapped the button!')
       }
+
+    _onPressButton2() {
+        Alert.alert('You tapped search homie!')
+    }
     
   render() {
     return (
@@ -18,7 +22,7 @@ class Footer extends React.Component {
           </View>
         </TouchableOpacity>
 
-        <TouchableOpacity onPress={this._onPressButton} underlayColor="white" style={styles.button}>
+        <TouchableOpacity onPress={this._onPressButton2} underlayColor="white" style={styles.button}>
           <View>
             <Text style={styles.buttonText}>Search</Text>
           </View>
