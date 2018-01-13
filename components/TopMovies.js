@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, Image, FlatList } from 'react-native';
+import { StyleSheet, Text, View, Image, FlatList, Alert } from 'react-native';
 import homemoviespic from '../images/homemovies.jpg';
 import MapTopMovies from './MapTopMovies';
 import ActionMoviesComp from './ActionMoviesComp';
@@ -22,6 +22,7 @@ class TopMovies extends React.Component {
         this.conditionalActionRender = this.conditionalActionRender.bind(this);
         this.conditionalComedyRender = this.conditionalComedyRender.bind(this);
         this.conditionalHorrorRender = this.conditionalHorrorRender.bind(this);
+        this.endreachedboy = this.endreachedboy.bind(this);
     }
     
 
@@ -89,7 +90,7 @@ componentDidMount() {
                         data={this.state.topPopularMovies}
                         renderItem={({ item }) => (
                         <View style={{margin: 10, alignContent: 'center', alignItems: 'center', width: 200, backgroundColor: 'grey'}}>
-                            <Image source={{uri:"https://image.tmdb.org/t/p/w500" + item.poster_path}} style={{height: 150, width: 120}}/>
+                            <Image source={{uri:"https://image.tmdb.org/t/p/w500" + item.poster_path}} style={styles.topImages}/>
                             <Text style={styles.originalTitle}>{item.original_title}</Text>
                         </View>
                         )}
@@ -113,7 +114,7 @@ componentDidMount() {
                         data={this.state.topAction}
                         renderItem={({ item }) => (
                         <View style={{margin: 10, alignContent: 'center', alignItems: 'center', width: 200, backgroundColor: 'grey'}}>
-                            <Image source={{uri:"https://image.tmdb.org/t/p/w500" + item.poster_path}} style={{height: 150, width: 120}}/>
+                            <Image source={{uri:"https://image.tmdb.org/t/p/w500" + item.poster_path}} style={styles.topImages}/>
                             <Text style={styles.originalTitle}>{item.original_title}</Text>
                         </View>
                         )}
@@ -124,6 +125,7 @@ componentDidMount() {
             
         }
     }
+
 
     conditionalComedyRender() {
         if(this.state.topComedyLoaded===true) {
@@ -136,7 +138,7 @@ componentDidMount() {
                         renderItem={({ item }) => (
                         
                         <View style={{margin: 10, alignContent: 'center', alignItems: 'center', width: 200, backgroundColor: 'grey'}}>
-                            <Image source={{uri:"https://image.tmdb.org/t/p/w500" + item.poster_path}} style={{height: 150, width: 120}}/>
+                            <Image source={{uri:"https://image.tmdb.org/t/p/w500" + item.poster_path}} style={styles.topImages}/>
                             <Text style={styles.originalTitle}>{item.original_title}</Text>
                         </View>
                         )}
@@ -148,18 +150,24 @@ componentDidMount() {
         }
     }
 
+
+    endreachedboy() {
+        Alert.alert("hello buddy end reached")
+    }
+
     conditionalHorrorRender() {
         if(this.state.topHorrorLoaded===true) {
             return(
                 <View style={styles.topContainer}>
                     <Text style={styles.topText}>Popular Horror Movies</Text>
                     <FlatList
+                        onEndReached={this.endreachedboy}
                         horizontal={true}
                         data={this.state.topHorror}
                         renderItem={({ item }) => (
                         
                         <View style={{margin: 10, alignContent: 'center', alignItems: 'center', width: 200, backgroundColor: 'grey'}}>
-                            <Image source={{uri:"https://image.tmdb.org/t/p/w500" + item.poster_path}} style={{height: 150, width: 120}}/>
+                            <Image source={{uri:"https://image.tmdb.org/t/p/w500" + item.poster_path}} style={styles.topImages}/>
                             <Text style={styles.originalTitle}>{item.original_title}</Text>
                         </View>
                         )}
@@ -200,6 +208,11 @@ const styles = StyleSheet.create({
   topContainer: {
       marginTop: 20,
       marginBottom: 20,
+  },
+  topImages :{
+      height: 250, 
+      width: 220,
+      marginBottom: 3,
   }
 });
 

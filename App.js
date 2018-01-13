@@ -2,6 +2,7 @@ import React from 'react';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import TopMovies from './components/TopMovies';
+import SearchPageComp from './components/SearchPageComp';
 import homemoviespic from './images/homemovies.jpg';
 // import athf from './images/athf.jpg';
 // import brakshow from './images/brakshow.jpg';
@@ -87,8 +88,8 @@ const MainScreenPage = () => (
 )
 
 const SearchPage = () => (
-  <View style={{flex:1, alignItems: 'center', justifyContent: 'center'}}>
-    <Text>This is the Search page</Text>
+  <View style={{alignItems: 'center', justifyContent: 'center'}}>
+    <SearchPageComp />
   </View>
 )
 
