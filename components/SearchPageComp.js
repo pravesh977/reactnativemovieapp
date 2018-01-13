@@ -44,8 +44,8 @@ class SearchPageComp extends React.Component {
                         <FlatList
                             data={this.state.searchedResults}
                             renderItem={({ item }) => (
-                            <View style={{margin: 10, alignContent: 'center', alignItems: 'center', width: 200, backgroundColor: 'grey'}}>
-                                <Image source={{uri:"https://image.tmdb.org/t/p/w500" + item.poster_path}} style={{height:200, width: 150}}/>
+                            <View style={{margin: 10, alignContent: 'center', alignItems: 'center'}}>
+                                <Image source={{uri:"https://image.tmdb.org/t/p/w500" + item.poster_path}} style={searchstyler.searchedImage}/>
                                 <Text>{item.original_title}</Text>
                             </View>
                             )}
@@ -63,8 +63,8 @@ class SearchPageComp extends React.Component {
             <View>
                 <Text style={searchstyler.container}>Search For Any Movies</Text>
                 <TextInput
-                    style={{height: 40, backgroundColor: 'pink'}}
-                    placeholder="Type here to translate!"
+                    style={{height: 40, fontWeight: 'bold', textAlign: 'center'}}
+                    placeholder="Type in the name of a movie"
                     onChangeText={(searchInput) => this.setState({searchInput})}
                     onSubmitEditing={this.submittedSearch}
                 />
@@ -84,8 +84,13 @@ const searchstyler = StyleSheet.create({
     fontSize: 30,
   },
   searchedContainer: {
-      alignItems: 'center'
-  }
+      alignItems: 'center',
+      width: '100%',
+  },
+  searchedImage: {
+    height:250, 
+    width: 200,
+  },
 });
 
 export default SearchPageComp;

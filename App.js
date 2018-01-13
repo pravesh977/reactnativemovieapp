@@ -77,12 +77,12 @@ const MainScreenPage = () => (
   <View style={{alignItems: 'center', flex:1}}>
   <ScrollView>
     <Text>This is the random Top page</Text>
+    <Image source={homemoviespic} style={{width: '100%'}}/>
+    {/* <Image source={homemoviespic}/>
     <Image source={homemoviespic}/>
-    <Image source={homemoviespic}/>
-    <Image source={homemoviespic}/>
-    <Image source={homemoviespic}/>
+    <Image source={homemoviespic}/> */}
     <TopMovies />
-    <Image source={homemoviespic}/>
+    <Image source={homemoviespic}  style={{width: '100%'}}/>
     </ScrollView>
   </View>
 )
