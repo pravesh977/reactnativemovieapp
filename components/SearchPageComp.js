@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, TextInput, FlatList, Image, ScrollView } from 'react-native';
+import { StyleSheet, Text, View, TextInput, FlatList, Image, ScrollView, Button, TouchableHighlight } from 'react-native';
 
 class SearchPageComp extends React.Component {
     constructor(props){
@@ -45,8 +45,11 @@ class SearchPageComp extends React.Component {
                             data={this.state.searchedResults}
                             renderItem={({ item }) => (
                             <View style={{margin: 10, alignContent: 'center', alignItems: 'center'}}>
+                                <TouchableHighlight onPress={()=>{this.props.onpictureclick(item.original_title)}}>
                                 <Image source={{uri:"https://image.tmdb.org/t/p/w500" + item.poster_path}} style={searchstyler.searchedImage}/>
+                                </TouchableHighlight>
                                 <Text>{item.original_title}</Text>
+                                <Button onPress={()=>{this.props.onpictureclick(item.original_title)}} title="hello"/>
                             </View>
                             )}
                             keyExtractor={item => item.id}

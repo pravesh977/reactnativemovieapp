@@ -3,11 +3,12 @@ import Header from './components/Header';
 import Footer from './components/Footer';
 import TopMovies from './components/TopMovies';
 import SearchPageComp from './components/SearchPageComp';
+import RandomShakeComp from './components/RandomShakeComp'
 import homemoviespic from './images/homemovies.jpg';
 // import athf from './images/athf.jpg';
 // import brakshow from './images/brakshow.jpg';
 // import squildbillies from './images/squidbillies.jpg';
-import { StyleSheet, Text, View, Image, ViewPagerAndroid, TextInput, ScrollView, Button } from 'react-native';
+import { StyleSheet, Text, View, Image, ViewPagerAndroid, TextInput, ScrollView, Button, Alert } from 'react-native';
 import { TabNavigator } from 'react-navigation';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import TopPopularSingle from './components/TopPopularSingle';
@@ -70,7 +71,20 @@ import TopPopularSingle from './components/TopPopularSingle';
 //   }
 // });
 
+// export class App extends React.Component {
 
+//   onpictureclick() {
+//     Alert.alert("hello")
+//     }
+// }
+
+const onpictureclick = (forgotparam) => {
+  Alert.alert(forgotparam)
+}
+
+const showDetailsFunc = () => {
+
+}
 
 
 const MainScreenPage = () => (
@@ -89,21 +103,35 @@ const MainScreenPage = () => (
 
 const SearchPage = () => (
   <View style={{alignItems: 'center', justifyContent: 'center'}}>
-    <SearchPageComp />
+    <SearchPageComp onpictureclick={onpictureclick} />
   </View>
 )
 
-const RandomShakePage = () => (
-  <View style={{flex:1, alignItems: 'center', justifyContent: 'center'}}>
-    <Text>This is the Random Shake</Text>
-  </View>
-)
+
+class RandomShakePage extends React.Component {
+  render() {
+    return (
+          <View style={{flex:1, alignItems: 'center', justifyContent: 'center'}}>
+              <Text>Random Shake Buddy</Text>
+              <RandomShakeComp />
+          </View>
+    )
+  }
+}
 
 const FavoritePage = () => (
   <View style={{flex:1, alignItems: 'center', justifyContent: 'center'}}>
     <Text>This is the Favorite Page</Text>
   </View>
 )
+
+const DetailsPage = () => (
+  <View style={{flex:1, alignItems: 'center', justifyContent: 'center'}}>
+    <Text>Your Details</Text>
+  </View>
+)
+
+
 
   const RootTabs = TabNavigator({
       MSPage: {
@@ -158,7 +186,7 @@ const FavoritePage = () => (
           ),
         },
       }, 
-      
+
    },
   {
     tabBarPosition: 'bottom',

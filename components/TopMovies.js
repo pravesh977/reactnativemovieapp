@@ -1,11 +1,22 @@
 import React from 'react';
-import { StyleSheet, Text, View, Image, FlatList, Alert } from 'react-native';
+import { StyleSheet, Text, View, Image, FlatList, Alert, Button, Modal, ScrollView, TouchableHighlight } from 'react-native';
+import { StackNavigator } from 'react-navigation';
 import homemoviespic from '../images/homemovies.jpg';
 import MapTopMovies from './MapTopMovies';
 import ActionMoviesComp from './ActionMoviesComp';
 
+class DetailsPage extends React.Component {
+    render() {
+      return(
+      <View>
+        <Text>details</Text>
+      </View>
+      )
+    }
+  }
 
-class TopMovies extends React.Component {
+
+export default class TopMovies extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -13,16 +24,24 @@ class TopMovies extends React.Component {
             actionListLoaded: false,
             topComedyLoaded: false,
             topHorrorLoaded: false,
+            showModal: false,
             topPopularMovies: [],
             topAction: [],
             topComedy: [],
             topHorror: [],
+            modalstuffshown: false,
+            modalitems: null,
         }
         this.conditionalTopPopular = this.conditionalTopPopular.bind(this);
         this.conditionalActionRender = this.conditionalActionRender.bind(this);
         this.conditionalComedyRender = this.conditionalComedyRender.bind(this);
         this.conditionalHorrorRender = this.conditionalHorrorRender.bind(this);
+        this.mybuttonclick = this.mybuttonclick.bind(this);
         this.endreachedboy = this.endreachedboy.bind(this);
+        this.openModalFunc = this.openModalFunc.bind(this);
+        this.closeModalFunc = this.closeModalFunc.bind(this);
+        this.modalrender = this.modalrender.bind(this);
+        this.finconditional = this.finconditional.bind(this);
     }
     
 
@@ -50,7 +69,7 @@ componentDidMount() {
                 // {console.log("action yeahhh", this.state.topAction)}
                 })
             })
-    fetch('https://api.themoviedb.org/3/discover/movie?api_key=96c990ebfd368655c66e6d831b4e42fb&language=en-US&sort_by=vote_count.desc&include_adult=false&include_video=false&page=1&with_genres=35&without_genres=28')
+    fetch('https://api.themoviedb.org/3/discover/movie?api_key=96c990ebfd368655c66e6d831b4e42fb&language=en-US&sort_by=vote_count.desc&include_adult=false&include_video=false&page=1&with_genres=35&without_genres=28&append_to_response=videos')
         .then((response)=>{
             response.json()
                 .then((topComedyfilms) => {
@@ -59,7 +78,7 @@ componentDidMount() {
                         topComedyLoaded: true,
                         topComedy: topComedyfilms.results,
                         })
-                        // {console.log("comedy woohoo yeahhh", this.state.topComedy)}
+                        //{console.log("comedy woohoo yeahhh", this.state.topComedy)}
                     })
                 })
     fetch('https://api.themoviedb.org/3/discover/movie?api_key=96c990ebfd368655c66e6d831b4e42fb&language=en-US&sort_by=vote_count.desc&include_adult=false&include_video=false&page=1&with_genres=27')
@@ -76,6 +95,7 @@ componentDidMount() {
                 })
             }
 
+
     conditionalTopPopular() {
         if(this.state.apiTopLoaded===true) {
             return(
@@ -90,13 +110,24 @@ componentDidMount() {
                         data={this.state.topPopularMovies}
                         renderItem={({ item }) => (
                         <View style={{margin: 10, alignContent: 'center', alignItems: 'center', width: 200, backgroundColor: 'grey'}}>
-                            <Image source={{uri:"https://image.tmdb.org/t/p/w500" + item.poster_path}} style={styles.topImages}/>
+                            <TouchableHighlight onPress={() => {
+                                    this.openModalFunc()
+                                    this.setState({
+                                                   modalstuffshown: true,
+                                                   modalitems: item
+                                                })
+                                    this.modalrender(item) 
+                                        }
+                                    }>
+                                <Image source={{uri:"https://image.tmdb.org/t/p/w500" + item.poster_path}} style={styles.topImages}/>
+                            </TouchableHighlight>
                             <Text style={styles.originalTitle}>{item.original_title}</Text>
+                            {/* <Button onPress={console.log(this, "heyhey")} title="this"/> */}
+                            {/* <Button onPress={()=>this.props.navigation.navigate("Details")} title="heyD"/> */}
                         </View>
                         )}
                         keyExtractor={item => item.id}
                     />
-
                 </View>
             )
             
@@ -114,8 +145,19 @@ componentDidMount() {
                         data={this.state.topAction}
                         renderItem={({ item }) => (
                         <View style={{margin: 10, alignContent: 'center', alignItems: 'center', width: 200, backgroundColor: 'grey'}}>
-                            <Image source={{uri:"https://image.tmdb.org/t/p/w500" + item.poster_path}} style={styles.topImages}/>
+                            <TouchableHighlight onPress={() => {
+                                    this.openModalFunc()
+                                    this.setState({
+                                                   modalstuffshown: true,
+                                                   modalitems: item
+                                                })
+                                    this.modalrender(item) 
+                                        }
+                                    }>
+                                <Image source={{uri:"https://image.tmdb.org/t/p/w500" + item.poster_path}} style={styles.topImages}/>
+                            </TouchableHighlight>
                             <Text style={styles.originalTitle}>{item.original_title}</Text>
+                            {/* <Button onPress={()=>{Alert.alert(item.original_title)}} title="hello"/> */}
                         </View>
                         )}
                         keyExtractor={item => item.id}
@@ -131,15 +173,42 @@ componentDidMount() {
         if(this.state.topComedyLoaded===true) {
             return(
                 <View style={styles.topContainer}>
+                
                     <Text style={styles.topText}>Popular Comedy Movies</Text>
                     <FlatList
                         horizontal={true}
                         data={this.state.topComedy}
+                        extraData={this.state}
                         renderItem={({ item }) => (
                         
                         <View style={{margin: 10, alignContent: 'center', alignItems: 'center', width: 200, backgroundColor: 'grey'}}>
-                            <Image source={{uri:"https://image.tmdb.org/t/p/w500" + item.poster_path}} style={styles.topImages}/>
+                            <TouchableHighlight onPress={() => {
+                                    this.openModalFunc()
+                                    this.setState({
+                                                   modalstuffshown: true,
+                                                   modalitems: item
+                                                })
+                                    this.modalrender(item) 
+                                        }
+                                    }>
+                                <Image source={{uri:"https://image.tmdb.org/t/p/w500" + item.poster_path}} style={styles.topImages}/>
+                            </TouchableHighlight>
                             <Text style={styles.originalTitle}>{item.original_title}</Text>
+                            {/* <Button onPress={()=>{this.props.onpictureclick(item.original_title)}} title="hello"/> */}
+                            {/* <Button
+                                onPress={() => {
+                                    this.openModalFunc()
+                                    // console.log("hey")
+                                    this.setState({
+                                                   modalstuffshown: true,
+                                                   modalitems: item
+                                                })
+                                    this.modalrender(item) 
+                                        }
+                                    }
+                                title="Open modal"
+                            /> */}
+
                         </View>
                         )}
                         keyExtractor={item => item.id}
@@ -149,36 +218,115 @@ componentDidMount() {
             
         }
     }
-
+   
+    finconditional() {
+        if(this.state.modalstuffshown===true) {
+            return (
+                <View>
+                    <ScrollView>
+                        <Text>{this.state.modalitems.original_title}</Text>
+                        <Image source={{uri:"https://image.tmdb.org/t/p/w500" + this.state.modalitems.poster_path}} style={styles.topImages}/>           
+                        <Text>{this.state.modalitems.overview}</Text>
+                        <Text>Released Date: {this.state.modalitems.release_date}</Text>
+                        <Text>Average Vote: {this.state.modalitems.vote_average}</Text>
+                        <Image source={{uri:"https://image.tmdb.org/t/p/w500" + this.state.modalitems.backdrop_path}} style={styles.topImages}/>
+                        
+                    </ScrollView>
+                </View>
+            )
+        }
+    }
+    mybuttonclick(stupidparam) {
+        Alert.alert(stupidparam)
+        
+    }
 
     endreachedboy() {
         Alert.alert("hello buddy end reached")
+    }
+
+
+
+    modalrender(item) {
+        return (
+            <Modal
+                visible={this.state.showModal}
+                animationType={'slide'}
+                onRequestClose={() => this.closeModalFunc()}
+            >
+                <View>
+                    <View>         
+                        {/* {this.state.modalstuffshown && <View><Text>{this.state.modalitems.id}</Text>
+                                                            <Text>{this.state.modalitems.original_title}</Text>
+                                                        </View>
+                                                    } */}
+                        <Button
+                            onPress={() => this.closeModalFunc()}
+                            title="Close"
+                        >   
+                        </Button>
+                        {this.finconditional()}
+                            {/* {console.log("fucking items", this.state.modalitems)} */}
+                        {/* {console.log(this.state.modalstuffshown)}
+                        {console.log("fucking items", this.state.modalitems)} */}
+                        {/* {console.log("this item right here", item)} */}
+                       
+                        {/* <Text>{item.overview}</Text>
+                        <Text>{item.release_date}</Text> */}
+                    </View>
+                </View>
+            </Modal>
+        )
     }
 
     conditionalHorrorRender() {
         if(this.state.topHorrorLoaded===true) {
             return(
                 <View style={styles.topContainer}>
+                
+                        
+                
                     <Text style={styles.topText}>Popular Horror Movies</Text>
                     <FlatList
                         onEndReached={this.endreachedboy}
                         horizontal={true}
                         data={this.state.topHorror}
+                        extraData={this.state}
                         renderItem={({ item }) => (
-                        
+                            
                         <View style={{margin: 10, alignContent: 'center', alignItems: 'center', width: 200, backgroundColor: 'grey'}}>
-                            <Image source={{uri:"https://image.tmdb.org/t/p/w500" + item.poster_path}} style={styles.topImages}/>
+                        
+                        <TouchableHighlight onPress={() => {
+                                    this.openModalFunc()
+                                    // console.log("hey")
+                                    this.setState({
+                                                   modalstuffshown: true,
+                                                   modalitems: item
+                                                })
+                                    this.modalrender(item) 
+                                        }
+                                    }>
+                                <Image source={{uri:"https://image.tmdb.org/t/p/w500" + item.poster_path}} style={styles.topImages}/>
+                            </TouchableHighlight>
                             <Text style={styles.originalTitle}>{item.original_title}</Text>
+                            
                         </View>
                         )}
                         keyExtractor={item => item.id}
                     />
+                     
                 </View>
             )
             
         }
     }
+openModalFunc() {
+    this.setState({showModal: true})
+};
 
+closeModalFunc() {
+    this.setState({showModal: false})
+}
 
 render() {
     return (
@@ -188,6 +336,8 @@ render() {
       {this.conditionalActionRender()}
       {this.conditionalComedyRender()}
       {this.conditionalHorrorRender()}
+      {this.modalrender()}
+      
     </View>
     );
   }
@@ -215,7 +365,12 @@ const styles = StyleSheet.create({
       marginBottom: 3,
   }
 });
+const StackConst = StackNavigator ({
+    Details : {
+        screen: DetailsPage,
+    }
+})
+
+//export default StackConst;
 
 
-
-export default TopMovies;
