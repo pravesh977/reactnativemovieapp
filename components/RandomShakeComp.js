@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, Button, StackNavigator } from 'react-native';
+import { StyleSheet, Text, View, Button, StackNavigator, WebView, Platform } from 'react-native';
 
 
 // const MyProfileScreen = () => (
@@ -7,27 +7,32 @@ import { StyleSheet, Text, View, Button, StackNavigator } from 'react-native';
 //       <Text>Details Screen</Text>
 //     </View>
 //   );
-  class MyProfileScreen extends React.Component {
-    render() {
-      return (
-            <View style={{flex:1, alignItems: 'center', justifyContent: 'center'}}>
-                <Text>Random Shake Buddy</Text>
-            </View>
-      )
-    }
-  }
+  // class MyProfileScreen extends React.Component {
+  //   render() {
+  //     return (
+  //           <View style={{flex:1, alignItems: 'center', justifyContent: 'center'}}>
+  //               <Text>Random Shake Buddy</Text>
+  //           </View>
+  //     )
+  //   }
+  // }
 
 class RandomShakeComp extends React.Component {
-    static navigationOptions = {
-        title: 'Home',
-      }
+    // static navigationOptions = {
+    //     title: 'Home',
+    //   }
    
     render() {
       return (
-        <Button
-          onPress={() => this.props.navigation.navigate('Profile')}
-          title="Details buddy"
-        />
+        <View style={{ height: 300, width: '100%' }}>
+        <Text>HEYHEY</Text>
+          <WebView
+                    style={ styles.WebViewContainer }
+                    javaScriptEnabled={true}
+                    domStorageEnabled={true}
+                    source={{uri: 'https://www.youtube.com/embed/cOXnYNgqf5Q' }}
+            />
+        </View>
       );
     }
   }
@@ -43,3 +48,13 @@ class RandomShakeComp extends React.Component {
   
 
 export default RandomShakeComp;
+
+const styles = StyleSheet.create({
+ 
+  WebViewContainer: {
+   
+      marginTop: (Platform.OS == 'ios') ? 20 : 0,
+   
+    }
+    
+  });

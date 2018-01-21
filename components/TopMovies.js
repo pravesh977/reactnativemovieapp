@@ -116,7 +116,7 @@ componentDidMount() {
                                                    modalstuffshown: true,
                                                    modalitems: item
                                                 })
-                                    this.modalrender(item) 
+                                    this.modalrender() 
                                         }
                                     }>
                                 <Image source={{uri:"https://image.tmdb.org/t/p/w500" + item.poster_path}} style={styles.topImages}/>
@@ -151,7 +151,7 @@ componentDidMount() {
                                                    modalstuffshown: true,
                                                    modalitems: item
                                                 })
-                                    this.modalrender(item) 
+                                    this.modalrender() 
                                         }
                                     }>
                                 <Image source={{uri:"https://image.tmdb.org/t/p/w500" + item.poster_path}} style={styles.topImages}/>
@@ -188,7 +188,7 @@ componentDidMount() {
                                                    modalstuffshown: true,
                                                    modalitems: item
                                                 })
-                                    this.modalrender(item) 
+                                    this.modalrender() 
                                         }
                                     }>
                                 <Image source={{uri:"https://image.tmdb.org/t/p/w500" + item.poster_path}} style={styles.topImages}/>
@@ -247,7 +247,7 @@ componentDidMount() {
 
 
 
-    modalrender(item) {
+    modalrender() {
         return (
             <Modal
                 visible={this.state.showModal}
@@ -303,7 +303,7 @@ componentDidMount() {
                                                    modalstuffshown: true,
                                                    modalitems: item
                                                 })
-                                    this.modalrender(item) 
+                                    this.modalrender() 
                                         }
                                     }>
                                 <Image source={{uri:"https://image.tmdb.org/t/p/w500" + item.poster_path}} style={styles.topImages}/>

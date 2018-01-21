@@ -45,11 +45,28 @@ class SearchPageComp extends React.Component {
                             data={this.state.searchedResults}
                             renderItem={({ item }) => (
                             <View style={{margin: 10, alignContent: 'center', alignItems: 'center'}}>
-                                <TouchableHighlight onPress={()=>{this.props.onpictureclick(item.original_title)}}>
+
+                            <TouchableHighlight onPress={() => {
+                                    this.props.openModalFunc()
+                                    // console.log("searcheditem", item)
+                                    // this.setState({
+                                    //                modalstuffshown: true,
+                                    //                modalitems: item
+                                    //             })
+                                    this.props.passingstates(item)
+                                    this.props.modalrender() 
+                                        }
+                                    }>
                                 <Image source={{uri:"https://image.tmdb.org/t/p/w500" + item.poster_path}} style={searchstyler.searchedImage}/>
-                                </TouchableHighlight>
+                            </TouchableHighlight>
+
+                                {/* <TouchableHighlight onPress={()=>{this.props.newalerter(item.original_title)}}>
+                                <Image source={{uri:"https://image.tmdb.org/t/p/w500" + item.poster_path}} style={searchstyler.searchedImage}/>
+                                </TouchableHighlight> */}
+                                
                                 <Text>{item.original_title}</Text>
-                                <Button onPress={()=>{this.props.onpictureclick(item.original_title)}} title="hello"/>
+                                {/* <Button onPress={()=>{this.props.newalerter()}} title="hello"/>
+                                <Button onPress={()=>{this.props.newalerter()}} title="modalyo" /> */}
                             </View>
                             )}
                             keyExtractor={item => item.id}
@@ -65,12 +82,15 @@ class SearchPageComp extends React.Component {
         return (
             <View>
                 <Text style={searchstyler.container}>Search For Any Movies</Text>
+                <Text>{this.props.yourname}</Text>
+                {console.log(this.props.yourname)}
                 <TextInput
                     style={{height: 40, fontWeight: 'bold', textAlign: 'center'}}
                     placeholder="Type in the name of a movie"
                     onChangeText={(searchInput) => this.setState({searchInput})}
                     onSubmitEditing={this.submittedSearch}
                 />
+                
                 <Text style={{padding: 10, fontSize: 42}}>
                     {this.state.searchInput.split(' ').map((word) => word && '🍕').join(' ')}
                 </Text>
