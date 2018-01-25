@@ -1,9 +1,11 @@
 import React from 'react';
-import { StyleSheet, Text, View, Image, FlatList, Alert, Button, Modal, ScrollView, TouchableHighlight } from 'react-native';
-import { StackNavigator } from 'react-navigation';
+import { StyleSheet, Text, View, Image, FlatList, Alert, Button, Modal, ScrollView, TouchableHighlight, ViewPagerAndroid } from 'react-native';
 import homemoviespic from '../images/homemovies.jpg';
 import MapTopMovies from './MapTopMovies';
 import ActionMoviesComp from './ActionMoviesComp';
+import brak from '../images/brakshow.jpg';
+import athf from '../images/athf.jpg';
+import cinemaback from './../images/cinemaback.jpeg';
 
 class DetailsPage extends React.Component {
     render() {
@@ -42,6 +44,8 @@ export default class TopMovies extends React.Component {
         this.closeModalFunc = this.closeModalFunc.bind(this);
         this.modalrender = this.modalrender.bind(this);
         this.finconditional = this.finconditional.bind(this);
+        this.zeroVote = this.zeroVote.bind(this);
+        this.introViewPager = this.introViewPager.bind(this);
     }
     
 
@@ -221,18 +225,17 @@ componentDidMount() {
    
     finconditional() {
         if(this.state.modalstuffshown===true) {
-            return (
-                <View>
+            return (               
                     <ScrollView>
-                        <Text>{this.state.modalitems.original_title}</Text>
-                        <Image source={{uri:"https://image.tmdb.org/t/p/w500" + this.state.modalitems.poster_path}} style={styles.topImages}/>           
-                        <Text>{this.state.modalitems.overview}</Text>
-                        <Text>Released Date: {this.state.modalitems.release_date}</Text>
-                        <Text>Average Vote: {this.state.modalitems.vote_average}</Text>
-                        <Image source={{uri:"https://image.tmdb.org/t/p/w500" + this.state.modalitems.backdrop_path}} style={styles.topImages}/>
-                        
-                    </ScrollView>
-                </View>
+                        <View style={styles.modalContainer}>
+                            <Text style={styles.modalTitle}>{this.state.modalitems.original_title}</Text>
+                            <Image source={{uri:"https://image.tmdb.org/t/p/w500" + this.state.modalitems.poster_path}} style={styles.modalPictures}/>           
+                            <Text style={{fontSize: 30, textDecorationLine: 'underline', fontStyle: 'italic'}}>Overview</Text><Text style={styles.overview}>{this.state.modalitems.overview}</Text>
+                            <Text style={styles.datevotetext}>Released Date: {this.state.modalitems.release_date}</Text>
+                            {this.zeroVote()}
+                            <Image source={{uri:"https://image.tmdb.org/t/p/w500" + this.state.modalitems.backdrop_path}} style={styles.modalPictures}/>
+                        </View>
+                    </ScrollView>             
             )
         }
     }
@@ -328,16 +331,50 @@ closeModalFunc() {
     this.setState({showModal: false})
 }
 
+zeroVote() {
+    if(this.state.modalitems.vote_average==0) {
+      return (
+        <Text style={styles.datevotetext}>Not rated yet</Text>
+      )
+    }
+    else return (
+      <Text style={styles.datevotetext}>Rating: {this.state.modalitems.vote_average}</Text>
+    )
+  }
+
+  introViewPager() {
+      return (
+        <View style={{flex: 1}}>
+        <ViewPagerAndroid style={styles.viewPager} initialPage={0}>
+          <View>
+            <Image source={brak} style={{width: '100%'}} key="1"/>
+          </View>
+          <View>
+            <Image source={athf} style={{width: '100%'}} key="2"/>
+          </View>
+        </ViewPagerAndroid>
+        <ViewPagerAndroid style={styles.viewPager} initialPage={0}>
+          <View>
+            <Image source={brak} style={{width: '100%'}} key="1"/>
+          </View>
+          <View>
+            <Image source={athf} style={{width: '100%'}} key="2"/>
+          </View>
+        </ViewPagerAndroid>
+        </View>
+      )
+  }
+
 render() {
     return (
-    <View>
-      {/* <Image source={homemoviespic} style={{flex: 1}}/> */}
+    <View>      
       {this.conditionalTopPopular()}
       {this.conditionalActionRender()}
       {this.conditionalComedyRender()}
       {this.conditionalHorrorRender()}
       {this.modalrender()}
-      
+      {this.introViewPager()}
+      <Text>HEYERAERAER</Text>
     </View>
     );
   }
@@ -359,17 +396,49 @@ const styles = StyleSheet.create({
       marginTop: 20,
       marginBottom: 20,
   },
+  modalContainer: {
+    alignItems:'center',
+    justifyContent: 'center',
+    width: '95%',
+    paddingBottom: 105,
+  },
+  modalTitle: {
+    textAlign:'center',
+    fontSize: 35,
+    fontWeight: 'bold'
+  },
+  modalPictures: {
+    height: 250, 
+    width: 220,
+    marginBottom: 3,
+    marginTop: '5%',
+    marginBottom: '10%',
+  },
   topImages :{
       height: 250, 
       width: 220,
       marginBottom: 3,
+  },
+  overview: {
+    textAlign: 'center',
+    fontSize: 28,
+    margin: '5%'
+  },
+  datevotetext: {
+    fontSize: 25,
+    marginTop: '5%',
+    marginBottom: '5%',
+    fontStyle: 'italic',
+  },
+  viewPager: {
+    flex: 1
+  },
+  pageStyle: {
+    alignItems: 'center',
+    padding: 20,
+    height: 50,
   }
 });
-const StackConst = StackNavigator ({
-    Details : {
-        screen: DetailsPage,
-    }
-})
 
 //export default StackConst;
 

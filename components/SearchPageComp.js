@@ -54,7 +54,7 @@ class SearchPageComp extends React.Component {
                                     //                modalitems: item
                                     //             })
                                     this.props.passingstates(item)
-                                    this.props.modalrender() 
+                                    // this.props.modalrender() 
                                         }
                                     }>
                                 <Image source={{uri:"https://image.tmdb.org/t/p/w500" + item.poster_path}} style={searchstyler.searchedImage}/>
@@ -82,8 +82,6 @@ class SearchPageComp extends React.Component {
         return (
             <View>
                 <Text style={searchstyler.container}>Search For Any Movies</Text>
-                <Text>{this.props.yourname}</Text>
-                {console.log(this.props.yourname)}
                 <TextInput
                     style={{height: 40, fontWeight: 'bold', textAlign: 'center'}}
                     placeholder="Type in the name of a movie"

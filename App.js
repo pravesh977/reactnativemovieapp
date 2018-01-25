@@ -28,23 +28,24 @@ export default class App extends React.Component {
       this.finconditional = this.finconditional.bind(this);
       this.newalerter = this.newalerter.bind(this);
       this.passingstates = this.passingstates.bind(this);
+      this.zeroVote = this.zeroVote.bind(this);
     }
 
     finconditional() {
       if(this.state.modalstuffshown===true) {
           return (
-              <View>
                   <ScrollView>
                     {/* {console.log("modaaal", this.state.modalstuffshown)} */}
-                      <Text>{this.state.modalitems.original_title}</Text>
+                    <View style={styles.modalContainer}>
+                      <Text style={styles.originalTitle}>{this.state.modalitems.original_title}</Text>
                       <Image source={{uri:"https://image.tmdb.org/t/p/w500" + this.state.modalitems.poster_path}} style={styles.topImages}/>           
-                      <Text>{this.state.modalitems.overview}</Text>
-                      <Text>Released Date: {this.state.modalitems.release_date}</Text>
-                      <Text>Average Vote: {this.state.modalitems.vote_average}</Text>
+                      <Text style={{fontSize: 30, textDecorationLine: 'underline'}}>Overview</Text><Text style={styles.overview}>{this.state.modalitems.overview}</Text>
+                      <Text style={styles.datevotetext}>Released Date: {this.state.modalitems.release_date}</Text>
+                      {/* <Text style={styles.datevotetext}>Average Vote: {this.state.modalitems.vote_average}</Text> */}
+                      {this.zeroVote()}
                       <Image source={{uri:"https://image.tmdb.org/t/p/w500" + this.state.modalitems.backdrop_path}} style={styles.topImages}/>
-                      
+                    </View>
                   </ScrollView>
-              </View>
           )
       }
   }
@@ -64,9 +65,9 @@ export default class App extends React.Component {
             animationType={'slide'}
             onRequestClose={() => this.closeModalFunc()}
         >
-            <View>
+            <View style={{alignItems: 'center'}}>
                 <View>         
-                  {console.log(this.state.modalstuffshown)}
+                  {/* {console.log(this.state.modalstuffshown)} */}
            
                     <Button
                         onPress={() => this.closeModalFunc()}
@@ -78,6 +79,17 @@ export default class App extends React.Component {
             </View>
         </Modal>
     )
+}
+
+zeroVote() {
+  if(this.state.modalitems.vote_average==0) {
+    return (
+      <Text style={styles.datevotetext}>Not rated yet</Text>
+    )
+  }
+  else return (
+    <Text style={styles.datevotetext}>Rating: {this.state.modalitems.vote_average}</Text>
+  )
 }
 openModalFunc() {
   this.setState({modalShown: true})
@@ -96,8 +108,6 @@ render() {
     <TabComp 
       newalerter={this.newalerter}
       screenProps={{
-        myname: "pravesh",
-        yourname: "assman",
         newalerter: this.newalerter,
         openModalFunc: this.openModalFunc,
         closeModalFunc: this.closeModalFunc,
@@ -113,25 +123,33 @@ render() {
   }
   const styles = StyleSheet.create({
     originalTitle: {
-        textAlign: 'center',
-        fontSize: 18,
-        fontWeight: 'bold',
-        fontStyle: 'italic',
+      textAlign:'center',
+      fontSize: 35,
+      fontWeight: 'bold'
     },
-    topText: {
-        fontSize: 20,
-        marginLeft: 5,
-        fontWeight: 'bold',
+    modalContainer: {
+      alignItems:'center',
+      justifyContent: 'center',
+      width: '95%',
     },
-    topContainer: {
-        marginTop: 20,
-        marginBottom: 20,
-    },
-    topImages :{
+    topImages: {
         height: 250, 
         width: 220,
         marginBottom: 3,
-    }
+        marginTop: '5%',
+        marginBottom: '5%',
+    },
+    overview: {
+      textAlign: 'center',
+      fontSize: 28,
+      margin: '5%'
+    },
+    datevotetext: {
+      fontSize: 25,
+      marginTop: '5%',
+      marginBottom: '5%',
+      fontStyle: 'italic',
+    },
   });
 
 

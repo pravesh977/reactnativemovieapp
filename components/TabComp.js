@@ -1,9 +1,10 @@
 
 import React from 'react';
-import { StyleSheet, Text, View, Image, ViewPagerAndroid, TextInput, ScrollView, Button, Alert, Modal } from 'react-native';
+import { StyleSheet, Text, View, Image, TextInput, ScrollView, Button, Alert, Modal, ViewPagerAndroid } from 'react-native';
 import { TabNavigator } from 'react-navigation';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import SearchPageComp from './SearchPageComp';
+import RandomShakeComp from './RandomShakeComp';
 import TopMovies from './TopMovies';
 import homemoviespic from '../images/homemovies.jpg';
 
@@ -34,7 +35,7 @@ import homemoviespic from '../images/homemovies.jpg';
     <Image source={homemoviespic}/>
     <Image source={homemoviespic}/> */}
     <TopMovies />
-    <Image source={homemoviespic} style={{width: '100%'}}/>
+    {/* <Image source={homemoviespic} style={{width: '100%'}}/> */}
     </ScrollView>
   </View>
   )
@@ -49,8 +50,6 @@ import homemoviespic from '../images/homemovies.jpg';
         // openModalFunc={this.openModalFunc}
         // closeModalFunc={this.closeModalFunc}
         // newalerter={this.props.screenProps.newalerter}
-        // myname={props.myname}
-        yourname={this.props.screenProps.yourname}
         newalerter={this.props.screenProps.newalerter}
         openModalFunc={this.props.screenProps.openModalFunc}
         closeModalFunc={this.props.screenProps.closeModalFunc}
@@ -67,30 +66,37 @@ import homemoviespic from '../images/homemovies.jpg';
   
   
   
-  class RandomShakePage extends React.Component {
-    render() {
-      return (
-            <View style={{flex:1, alignItems: 'center', justifyContent: 'center'}}>
-                {this.props.screenProps.modalrender()}
-                <Text>{this.props.screenProps.myname}</Text>
-                <Button onPress={()=>{
-                    this.props.screenProps.openModalFunc()}} title="modal yo"
-                    // console.log(this.state.modalShown)
-                    
-                    
-                />
-            </View>
-      )
-    }
-  }
+        class RandomShakePage extends React.Component {
+            render() {
+              return (
+                    <RandomShakeComp
+                        openModalFunc={this.props.screenProps.openModalFunc}
+                        modalrender={this.props.screenProps.modalrender}
+                        passingstates={this.props.screenProps.passingstates}
+                    />
+                    )
+                }
+            }
   
   const FavoritePage = props => (
     <View>
-      <Text>This is the Favorite Page</Text>
-      <Text>{props.screenProps.myname}</Text>
-      <Text>{props.screenProps.yourname}</Text>
-      {/* {console.log(this.props.screenProps)}
-      <Text style={{backgroundColor: 'pink'}}>{props.myname}</Text> */}
+      <Text style={{textAlign: 'center'}}>This is the Favorite Page... Coming soon</Text>
+      <ViewPagerAndroid
+            style={styles.viewPager}
+            initialPage={0}>
+        <View style={styles.pageStyle} key="1">
+        <Text>Random Movies Page</Text>
+        <ScrollView>
+          <View>
+          <Image source={homemoviespic} style={{width: '100%'}}/>
+        </View>
+        </ScrollView>
+        </View>
+        <View style={styles.pageStyle} key="2">
+          <Text>Search Page</Text>
+          <Image source={homemoviespic} style={{width: '100%'}}/>
+        </View>
+        </ViewPagerAndroid>
     </View>
   )
 
@@ -165,6 +171,17 @@ import homemoviespic from '../images/homemovies.jpg';
       animationEnabled: true,
     })
     
+
+    const styles = StyleSheet.create({
+        viewPager: {
+          flex: 1
+        },
+        pageStyle: {
+          alignItems: 'center',
+          padding: 20,
+          height: 50,
+        }
+      });
   
   //export default RootTabs;
   const RootTabs = TabNavigator({
