@@ -40,7 +40,7 @@ class SearchPageComp extends React.Component {
                     <View style={searchstyler.searchedContainer}>
                     {/* <MapTopMovies topPopularMovies={this.state.topPopularMovies} /> */}
                     {/* Going to use FlatList because it is giving an error when using horizontal={true} */}
-                        <Text>Here are your Results</Text>
+                        <Text style={{fontSize: 24, fontWeight: 'bold'}}>Here are your Results</Text>
                         <FlatList
                             data={this.state.searchedResults}
                             renderItem={({ item }) => (
@@ -64,7 +64,7 @@ class SearchPageComp extends React.Component {
                                 <Image source={{uri:"https://image.tmdb.org/t/p/w500" + item.poster_path}} style={searchstyler.searchedImage}/>
                                 </TouchableHighlight> */}
                                 
-                                <Text>{item.original_title}</Text>
+                                <Text style={searchstyler.originalTitle}>{item.original_title}</Text>
                                 {/* <Button onPress={()=>{this.props.newalerter()}} title="hello"/>
                                 <Button onPress={()=>{this.props.newalerter()}} title="modalyo" /> */}
                             </View>
@@ -81,16 +81,16 @@ class SearchPageComp extends React.Component {
     render() {
         return (
             <View>
-                <Text style={searchstyler.container}>Search For Any Movies</Text>
+                <Text style={searchstyler.searchAnyText}>Search For Any Movies</Text>
                 <TextInput
-                    style={{height: 40, fontWeight: 'bold', textAlign: 'center'}}
-                    placeholder="Type in the name of a movie"
+                    style={{height: 40, fontWeight: 'bold', textAlign: 'center', fontSize: 26, color: '#4540E8'}}
+                    placeholder="Search For a Movie"
+                    placeholderTextColor = 'black'
                     onChangeText={(searchInput) => this.setState({searchInput})}
                     onSubmitEditing={this.submittedSearch}
-                />
-                
+                />        
                 <Text style={{padding: 10, fontSize: 42}}>
-                    {this.state.searchInput.split(' ').map((word) => word && '🍕').join(' ')}
+                    {/* {this.state.searchInput.split(' ').map((word) => word && '🍕').join(' ')} */}
                 </Text>
                 {this.conditionalSearchRender()}
             </View>
@@ -99,19 +99,26 @@ class SearchPageComp extends React.Component {
     }
 
 const searchstyler = StyleSheet.create({
-  container: {
+  searchAnyText: {
     alignItems: 'center',
     justifyContent: 'center',
     fontSize: 30,
+    backgroundColor: 'pink',
+    borderRadius: 50
   },
   searchedContainer: {
       alignItems: 'center',
       width: '100%',
   },
   searchedImage: {
-    height:250, 
-    width: 200,
+    height:320, 
+    width: 250,
   },
+  originalTitle: {
+      fontSize: 28,
+      backgroundColor: '#C4D9E8',
+      borderRadius: 5,
+  }
 });
 
 export default SearchPageComp;

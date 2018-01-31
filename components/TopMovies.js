@@ -1,11 +1,12 @@
 import React from 'react';
-import { StyleSheet, Text, View, Image, FlatList, Alert, Button, Modal, ScrollView, TouchableHighlight, ViewPagerAndroid } from 'react-native';
+import { StyleSheet, Text, View, Image, FlatList, Alert, Button, Modal, ScrollView, TouchableHighlight, ViewPagerAndroid, ImageBackground } from 'react-native';
 import homemoviespic from '../images/homemovies.jpg';
 import MapTopMovies from './MapTopMovies';
 import ActionMoviesComp from './ActionMoviesComp';
 import brak from '../images/brakshow.jpg';
 import athf from '../images/athf.jpg';
 import cinemaback from './../images/cinemaback.jpeg';
+import summerart from '../images/summerart.png';
 
 class DetailsPage extends React.Component {
     render() {
@@ -45,7 +46,7 @@ export default class TopMovies extends React.Component {
         this.modalrender = this.modalrender.bind(this);
         this.finconditional = this.finconditional.bind(this);
         this.zeroVote = this.zeroVote.bind(this);
-        this.introViewPager = this.introViewPager.bind(this);
+        // this.introViewPager = this.introViewPager.bind(this);
     }
     
 
@@ -113,7 +114,7 @@ componentDidMount() {
                         horizontal={true}
                         data={this.state.topPopularMovies}
                         renderItem={({ item }) => (
-                        <View style={{margin: 10, alignContent: 'center', alignItems: 'center', width: 200, backgroundColor: 'grey'}}>
+                        <View style={{margin: 10, alignContent: 'center', alignItems: 'center', width: 200, marginLeft: 20}}>
                             <TouchableHighlight onPress={() => {
                                     this.openModalFunc()
                                     this.setState({
@@ -148,7 +149,7 @@ componentDidMount() {
                         horizontal={true}
                         data={this.state.topAction}
                         renderItem={({ item }) => (
-                        <View style={{margin: 10, alignContent: 'center', alignItems: 'center', width: 200, backgroundColor: 'grey'}}>
+                        <View style={{margin: 10, alignContent: 'center', alignItems: 'center', width: 200, marginLeft: 20}}>
                             <TouchableHighlight onPress={() => {
                                     this.openModalFunc()
                                     this.setState({
@@ -185,7 +186,7 @@ componentDidMount() {
                         extraData={this.state}
                         renderItem={({ item }) => (
                         
-                        <View style={{margin: 10, alignContent: 'center', alignItems: 'center', width: 200, backgroundColor: 'grey'}}>
+                        <View style={{margin: 10, alignContent: 'center', alignItems: 'center', width: 200, marginLeft: 20}}>
                             <TouchableHighlight onPress={() => {
                                     this.openModalFunc()
                                     this.setState({
@@ -257,6 +258,7 @@ componentDidMount() {
                 animationType={'slide'}
                 onRequestClose={() => this.closeModalFunc()}
             >
+                <ImageBackground source={summerart} style={{width: '100%', flex: 1}}>
                 <View>
                     <View>         
                         {/* {this.state.modalstuffshown && <View><Text>{this.state.modalitems.id}</Text>
@@ -278,6 +280,7 @@ componentDidMount() {
                         <Text>{item.release_date}</Text> */}
                     </View>
                 </View>
+                </ImageBackground>
             </Modal>
         )
     }
@@ -297,7 +300,7 @@ componentDidMount() {
                         extraData={this.state}
                         renderItem={({ item }) => (
                             
-                        <View style={{margin: 10, alignContent: 'center', alignItems: 'center', width: 200, backgroundColor: 'grey'}}>
+                        <View style={{margin: 10, alignContent: 'center', alignItems: 'center', width: 200, marginLeft: 20}}>
                         
                         <TouchableHighlight onPress={() => {
                                     this.openModalFunc()
@@ -342,28 +345,28 @@ zeroVote() {
     )
   }
 
-  introViewPager() {
-      return (
-        <View style={{flex: 1}}>
-        <ViewPagerAndroid style={styles.viewPager} initialPage={0}>
-          <View>
-            <Image source={brak} style={{width: '100%'}} key="1"/>
-          </View>
-          <View>
-            <Image source={athf} style={{width: '100%'}} key="2"/>
-          </View>
-        </ViewPagerAndroid>
-        <ViewPagerAndroid style={styles.viewPager} initialPage={0}>
-          <View>
-            <Image source={brak} style={{width: '100%'}} key="1"/>
-          </View>
-          <View>
-            <Image source={athf} style={{width: '100%'}} key="2"/>
-          </View>
-        </ViewPagerAndroid>
-        </View>
-      )
-  }
+//   introViewPager() {
+//       return (
+//         <View style={{flex: 1}}>
+//         <ViewPagerAndroid style={styles.viewPager} initialPage={0}>
+//           <View>
+//             <Image source={brak} style={{width: '100%'}} key="1"/>
+//           </View>
+//           <View>
+//             <Image source={athf} style={{width: '100%'}} key="2"/>
+//           </View>
+//         </ViewPagerAndroid>
+//         <ViewPagerAndroid style={styles.viewPager} initialPage={0}>
+//           <View>
+//             <Image source={brak} style={{width: '100%'}} key="1"/>
+//           </View>
+//           <View>
+//             <Image source={athf} style={{width: '100%'}} key="2"/>
+//           </View>
+//         </ViewPagerAndroid>
+//         </View>
+//       )
+//   }
 
 render() {
     return (
@@ -373,7 +376,7 @@ render() {
       {this.conditionalComedyRender()}
       {this.conditionalHorrorRender()}
       {this.modalrender()}
-      {this.introViewPager()}
+      {/* {this.introViewPager()} */}
       <Text>HEYERAERAER</Text>
     </View>
     );
@@ -383,14 +386,16 @@ render() {
 const styles = StyleSheet.create({
   originalTitle: {
       textAlign: 'center',
-      fontSize: 18,
+      fontSize: 24,
       fontWeight: 'bold',
       fontStyle: 'italic',
+      color: 'white',
   },
   topText: {
-      fontSize: 20,
+      fontSize: 24,
       marginLeft: 5,
       fontWeight: 'bold',
+      color: 'white',
   },
   topContainer: {
       marginTop: 20,
@@ -413,6 +418,8 @@ const styles = StyleSheet.create({
     marginBottom: 3,
     marginTop: '5%',
     marginBottom: '10%',
+    borderWidth: 10,
+    borderColor: 'black'
   },
   topImages :{
       height: 250, 
@@ -422,13 +429,19 @@ const styles = StyleSheet.create({
   overview: {
     textAlign: 'center',
     fontSize: 28,
-    margin: '5%'
+    margin: '5%',
+    backgroundColor: 'black',
+    opacity: 0.6,
+    color: 'white'
   },
   datevotetext: {
     fontSize: 25,
     marginTop: '5%',
     marginBottom: '5%',
     fontStyle: 'italic',
+    backgroundColor: 'black',
+    opacity: 0.6,
+    color: 'white'
   },
   viewPager: {
     flex: 1

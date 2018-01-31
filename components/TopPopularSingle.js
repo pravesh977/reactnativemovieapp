@@ -3,7 +3,6 @@ import { ListView, View, Text, Image, ScrollView } from 'react-native';
 import homemoviespic from '../images/homemovies.jpg';
 import athf from '../images/athf.jpg';
 import brakshow from '../images/brakshow.jpg';
-import squildbillies from '../images/squidbillies.jpg';
 
 class TopPopularSingle extends React.Component {
   render() {

@@ -8,11 +8,12 @@ import homemoviespic from './images/homemovies.jpg';
 // import athf from './images/athf.jpg';
 // import brakshow from './images/brakshow.jpg';
 // import squildbillies from './images/squidbillies.jpg';
-import { StyleSheet, Text, View, Image, ViewPagerAndroid, TextInput, ScrollView, Button, Alert, Modal } from 'react-native';
+import { StyleSheet, Text, View, Image, ViewPagerAndroid, TextInput, ScrollView, Button, Alert, Modal, ImageBackground } from 'react-native';
 import { TabNavigator } from 'react-navigation';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import TopPopularSingle from './components/TopPopularSingle';
 import {TabComp} from './components/TabComp';
+import tokyoart from './images/tokyoart.jpeg'
 
 export default class App extends React.Component {
     constructor() {
@@ -65,6 +66,7 @@ export default class App extends React.Component {
             animationType={'slide'}
             onRequestClose={() => this.closeModalFunc()}
         >
+        <ImageBackground source={tokyoart} style={{width: '100%', flex: 1}}>
             <View style={{alignItems: 'center'}}>
                 <View>         
                   {/* {console.log(this.state.modalstuffshown)} */}
@@ -77,6 +79,7 @@ export default class App extends React.Component {
                     {this.finconditional()}
                 </View>
             </View>
+            </ImageBackground>
         </Modal>
     )
 }
@@ -125,7 +128,10 @@ render() {
     originalTitle: {
       textAlign:'center',
       fontSize: 35,
-      fontWeight: 'bold'
+      fontWeight: 'bold',
+      backgroundColor: 'black',
+      opacity: 0.8,
+      color: 'white'
     },
     modalContainer: {
       alignItems:'center',
@@ -138,17 +144,25 @@ render() {
         marginBottom: 3,
         marginTop: '5%',
         marginBottom: '5%',
+        borderColor: 'black',
+        borderWidth: 10,
     },
     overview: {
       textAlign: 'center',
       fontSize: 28,
-      margin: '5%'
+      margin: '5%',
+      backgroundColor: 'black',
+      opacity: 0.8,
+      color: 'white'
     },
     datevotetext: {
       fontSize: 25,
       marginTop: '5%',
       marginBottom: '5%',
       fontStyle: 'italic',
+      backgroundColor: 'black',
+      opacity: 0.8,
+      color: 'white'
     },
   });
 

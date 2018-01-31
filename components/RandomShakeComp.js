@@ -1,5 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text, View, Button, WebView, Platform, TouchableHighlight, Animated, Image } from 'react-native';
+import noimagepic from '../images/noimage.jpeg';
 // import RNShakeEvent from 'react-native-shake-event';
 
 
@@ -13,6 +14,8 @@ class RandomShakeComp extends React.Component {
     }
     this.searchRandom = this.searchRandom.bind(this);
     this.conditionalRandomRender = this.conditionalRandomRender.bind(this);
+    this.noImageFunc = this.noImageFunc.bind(this);
+    this.noTitleFunc = this.noTitleFunc.bind(this);
   }
 
 
@@ -23,6 +26,7 @@ searchRandom() {
     .then((response) => {
       response.json()
         .then((randomResponse) => {
+          // console.log(randomResponse)
           this.setState({
             randomLoaded: true,
             randomFilm: randomResponse,
@@ -41,15 +45,17 @@ searchRandom() {
 conditionalRandomRender() {
   if(this.state.randomLoaded===true) {
     return (
-      <View>
+      <View style={styles.randomSearched}>
          <TouchableHighlight onPress={() => {
             this.props.openModalFunc()
             this.props.passingstates(this.state.randomFilm)
             }
           }>
           <View style={{alignItems: 'center'}}>
-          <Image source={{uri:"https://image.tmdb.org/t/p/w500" + this.state.randomFilm.poster_path}} style={{height: 300, width: 250}}/>
-          <Text style={{fontSize: 30, fontWeight: 'bold', textAlign: 'center'}}>{this.state.randomFilm.original_title}</Text>
+          {/* <Image source={{uri:"https://image.tmdb.org/t/p/w500" + this.state.randomFilm.poster_path}} style={{height: 300, width: 250}}/> */}
+          {this.noImageFunc()}
+          {this.noTitleFunc()}
+          {/* <Text style={{fontSize: 30, fontWeight: 'bold', textAlign: 'center'}}>{this.state.randomFilm.original_title}</Text> */}
           </View>
         </TouchableHighlight>
         
@@ -63,23 +69,50 @@ conditionalRandomRender() {
   }
 }
 
+noImageFunc() {
+  
+  if(this.state.randomFilm.poster_path==null) {
+    return(
+    <Image source={noimagepic} style={{height: 300, width: 250}}/>
+    )
+  }
+  else 
+  return (
+    <Image source={{uri:"https://image.tmdb.org/t/p/w500" + this.state.randomFilm.poster_path}} style={{height: 320, width: 280, borderColor: 'black', borderWidth: 10}}/>
+  )
+}
+
+noTitleFunc() {
+  if(this.state.randomFilm.original_title==null) {
+    return(
+    <Text style={{textAlign:'center', fontSize: 35, fontWeight: 'bold'}}>No Title Available... Please try again</Text>
+    )
+  }
+  else 
+  return (
+    <Text style={{fontSize: 30, fontWeight: 'bold', textAlign: 'center', backgroundColor: '#8ADDFF'}}>{this.state.randomFilm.original_title}</Text>
+  )
+}
   render() {
     return (
-      <View style={{ alignItems: "center", flex: 1}}>
-         <TouchableHighlight style={{marginTop: 50}}onPress={() => {
-        // this.props.openModalFunc()
-        // this.props.passingstates(this.state.randomFilm)
-        // this.props.modalrender()
-      this.searchRandom()
-      }
-    }>
-      <Text style={{fontSize:40, color: 'cyan'}}>RANDOMIZE</Text>
-    </TouchableHighlight>
+      <View style={{ alignItems: "center", justifyContent: 'space-between'}}>
+         
          {/* <Button onPress={()=>{this.props.openModalFunc()}} title="modalyo"/> */}
          
           {/* {this.transformdiv()} */}
           {/* I dont know why the code breaks and modal doesnt show if I dont use the following line, only supposed to render if i click on the button? */}
           {this.conditionalRandomRender()}
+          <TouchableHighlight style={{marginTop: 50}}onPress={() => {
+          // this.props.openModalFunc()
+          // this.props.passingstates(this.state.randomFilm)
+          // this.props.modalrender()
+            this.searchRandom()
+            }
+          }>
+          <View style={{backgroundColor: 'red', borderRadius: 50}}>
+          <Text style={{fontSize:40, color: 'cyan'}}>RANDOMIZE</Text>
+          </View>
+        </TouchableHighlight>
          {this.props.modalrender()}
 
         </View>
@@ -96,7 +129,9 @@ const styles = StyleSheet.create({
     width: 220,
     marginBottom: 3,
   },
- 
+  randomSearched: {
+    marginTop: 100,
+  },
   WebViewContainer: {
    
       marginTop: (Platform.OS == 'ios') ? 20 : 0,
