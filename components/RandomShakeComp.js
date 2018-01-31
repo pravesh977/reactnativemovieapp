@@ -85,7 +85,7 @@ noImageFunc() {
 noTitleFunc() {
   if(this.state.randomFilm.original_title==null) {
     return(
-    <Text style={{textAlign:'center', fontSize: 35, fontWeight: 'bold'}}>No Title Available... Please try again</Text>
+    <Text style={{textAlign:'center', fontSize: 35, fontWeight: 'bold', backgroundColor: 'black', opacity: 0.7, color: 'white'}}>No Title Available... Please try again</Text>
     )
   }
   else 
