@@ -268,6 +268,7 @@ componentDidMount() {
                         <Button
                             onPress={() => this.closeModalFunc()}
                             title="Close"
+                            color="#5F67D1"
                         >   
                         </Button>
                         {this.finconditional()}
@@ -389,12 +390,14 @@ const styles = StyleSheet.create({
       fontSize: 24,
       fontWeight: 'bold',
       fontStyle: 'italic',
-      color: 'white',
+      color: '#FF8347',
+      backgroundColor: 'transparent',
   },
   topText: {
       fontSize: 24,
       marginLeft: 5,
       fontWeight: 'bold',
+      backgroundColor: 'transparent',
       color: 'white',
   },
   topContainer: {

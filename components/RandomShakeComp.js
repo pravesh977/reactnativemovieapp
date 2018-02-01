@@ -73,7 +73,7 @@ noImageFunc() {
   
   if(this.state.randomFilm.poster_path==null) {
     return(
-    <Image source={noimagepic} style={{height: 300, width: 250}}/>
+    <Image source={noimagepic} style={{height: 320, width: 280}}/>
     )
   }
   else 

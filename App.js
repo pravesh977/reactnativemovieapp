@@ -74,6 +74,7 @@ export default class App extends React.Component {
                     <Button
                         onPress={() => this.closeModalFunc()}
                         title="Close"
+                        color="#5F67D1"
                     >   
                     </Button>
                     {this.finconditional()}
